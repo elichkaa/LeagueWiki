@@ -1,11 +1,17 @@
 ﻿namespace League.Data
 {
+    using System;
     using EntityConfiguration;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Infrastructure;
     using Models;
     using Models.ChampionData;
     using Models.ItemData;
+    using Pomelo.EntityFrameworkCore.MySql;
     using Models.RuneData;
+    using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+    using Pomelo.EntityFrameworkCore.MySql.Internal;
+    using Pomelo.EntityFrameworkCore.MySql.Query.Internal;
 
     public class LeagueDbContext : DbContext
     {
@@ -40,7 +46,12 @@
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(Configuration.ConnectionString);
+                //T-SQL, SSMS
+                //optionsBuilder.UseSqlServer(Configuration.SqlServerConnectionString);
+
+                //MySQL, MySQLWorkbench
+                //optionsBuilder.UseMySql(Configuration.MySQLConnectionString, new MySqlServerVersion(new Version(8, 0, 22)), x => x
+                //    .CharSetBehavior(CharSetBehavior.NeverAppend));
             }
         }
 

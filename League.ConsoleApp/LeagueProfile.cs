@@ -8,7 +8,6 @@
     using DTOs.Champions;
     using DTOs.Items;
     using DTOs.Runes;
-    using Microsoft.IdentityModel.Tokens;
     using Models;
     using Models.ChampionData;
     using Models.ItemData;
