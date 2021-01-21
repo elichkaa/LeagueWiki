@@ -18,6 +18,8 @@
         private static LeagueDbContext context = new LeagueDbContext();
         public LeagueProfile()
         {
+            //CHAMPIONS
+
             this.CreateMap<ChampionDto, Champion>()
                 .ForMember(x => x.Info,
                     opt => opt.MapFrom(x => new Info
@@ -68,6 +70,8 @@
                         Path = x.Image.Path
                     }));
 
+            //RUNES
+
             this.CreateMap<RunePathDto, RunePath>()
                 .ForMember(x => x.Image,
                     opt => opt.MapFrom(x => new Image
@@ -81,9 +85,16 @@
                         {
                             Name = r.Name,
                             ShortDescription = r.ShortDescription,
-                            LongDescription = r.LongDescription
+                            LongDescription = r.LongDescription,
+                            Image = new Image
+                            {
+                                Path = r.IconPath
+                            },
+                            RiotId = r.RiotId
                         })).ToList()
                     }));
+
+            //ITEMS
 
             this.CreateMap<ItemDto, Item>()
                 .ForMember(x => x.Gold,
@@ -113,6 +124,8 @@
                             TagId = context.Tags.FirstOrDefault(p => p.Name == t).Id
                         }))
                     );
+
+            //TAGS
 
             this.CreateMap<string, Tag>()
                 .ForMember(x => x.Name,

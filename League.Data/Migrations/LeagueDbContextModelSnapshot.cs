@@ -307,12 +307,18 @@ namespace League.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int>("ImageId")
+                        .HasColumnType("int");
+
                     b.Property<string>("LongDescription")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<int>("RiotId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ShortDescription")
                         .HasColumnType("nvarchar(max)");
@@ -321,6 +327,8 @@ namespace League.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
 
                     b.HasIndex("SlotId");
 
@@ -340,6 +348,9 @@ namespace League.Data.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<int>("RiotId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("SlotsId")
                         .HasColumnType("int");
@@ -486,9 +497,17 @@ namespace League.Data.Migrations
 
             modelBuilder.Entity("League.Models.RuneData.Rune", b =>
                 {
+                    b.HasOne("League.Models.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("League.Models.RuneData.Slot", null)
                         .WithMany("Runes")
                         .HasForeignKey("SlotId");
+
+                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("League.Models.RuneData.RunePath", b =>

@@ -8,6 +8,9 @@ namespace League.ConsoleApp.DTOs.Runes
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
+        [JsonPropertyName("id")]
+        public int RiotId { get; set; }
+
         [JsonPropertyName("icon")]
         public string IconPath { get; set; }
 

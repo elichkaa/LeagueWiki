@@ -1,7 +1,7 @@
 [
   {
     "name": "Boots",
-    "description": "<mainText><stats><attention> 25</attention> Move Speed</stats></mainText><br>",
+    "description": "25 Move Speed",
     "colloq": ";",
     "plaintext": "Slightly increases Movement Speed",
     "into": [ "3158", "3006", "3009", "3020", "3047", "3111", "3117" ],

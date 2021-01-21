@@ -46,12 +46,12 @@
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //T-SQL, SSMS
-                //optionsBuilder.UseSqlServer(Configuration.SqlServerConnectionString);
+                //T-SQL, SqlServer Management Studio
+                optionsBuilder.UseSqlServer(Configuration.SqlServerConnectionString);
 
                 //MySQL, MySQLWorkbench
-                //optionsBuilder.UseMySql(Configuration.MySQLConnectionString, new MySqlServerVersion(new Version(8, 0, 22)), x => x
-                //    .CharSetBehavior(CharSetBehavior.NeverAppend));
+               //optionsBuilder.UseMySql(Configuration.MySQLConnectionString, new MySqlServerVersion(new Version(8, 0, 22)), x => x
+               //   .CharSetBehavior(CharSetBehavior.NeverAppend));
             }
         }
 

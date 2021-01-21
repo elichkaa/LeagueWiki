@@ -1,9 +1,11 @@
 ﻿namespace League.ConsoleApp
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Text.Json;
+    using System.Text.RegularExpressions;
     using AutoMapper;
     using Data;
     using DTOs;
@@ -67,6 +69,24 @@
         {
             var dbTags = mapper.Map<Tag[]>(tags.Distinct());
             context.Tags.AddRange(dbTags);
+            context.SaveChanges();
+        }
+
+        private static string RemoveTagsFromText(string text)
+        {
+            return Regex.Replace(text, "<[^>]+>", string.Empty);
+        }
+
+        public void RemoveTagsFromItemDescriptions(LeagueDbContext context)
+        {
+            var items = context.Items.ToList();
+
+            foreach (var item in items)
+            {
+                item.Description = RemoveTagsFromText(item.Description).Trim();
+                context.Update(item);
+            }
+
             context.SaveChanges();
         }
     }

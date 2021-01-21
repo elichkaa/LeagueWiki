@@ -12,11 +12,13 @@
         static void Main()
         {
             using var context = new LeagueDbContext();
+
             //uncomment the method you would like to use
             //uncomment the optionsBuilder settings in the OnConfiguring method in the LeagueDbContext class
             //configure connectionString in Configuration if needed
+
             //CreateMySqlDb(context);
-            //CreateSqlServerDb(context);
+            CreateSqlServerDb(context);
 
             var config = new MapperConfiguration(x =>
             {
@@ -24,16 +26,11 @@
             });
 
             var importer = new DataImporter(config);
-            
-            //importer.ImportChampions(context);
-            //importer.ImportMap(context);
-            //importer.ImportRunes(context);
-            //importer.ImportItems(context);
+            //ImportData(importer, context);
         }
 
         private static void CreateMySqlDb(LeagueDbContext context)
         {
-            //configure connection string in League.Data in the Configuration class under MySqlConnectionString
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
@@ -42,6 +39,15 @@
         {
             context.Database.EnsureDeleted();
             context.Database.Migrate();
+        }
+
+        private static void ImportData(DataImporter importer, LeagueDbContext context)
+        {
+            importer.ImportChampions(context);
+            importer.ImportMap(context);
+            importer.ImportRunes(context);
+            importer.ImportItems(context);
+            importer.RemoveTagsFromItemDescriptions(context);
         }
     }
 }
