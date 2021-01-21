@@ -4,14 +4,16 @@ using League.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace League.Data.Migrations
 {
     [DbContext(typeof(LeagueDbContext))]
-    partial class LeagueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210121103022_ModifyItemStats")]
+    partial class ModifyItemStats
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,12 +224,6 @@ namespace League.Data.Migrations
 
                     b.Property<int>("ItemStatsId")
                         .HasColumnType("int");
-
-                    b.Property<string>("ItemsFrom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ItemsTo")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MapsItemId")
                         .HasColumnType("int");

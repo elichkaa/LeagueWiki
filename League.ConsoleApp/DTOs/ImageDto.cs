@@ -1,4 +1,4 @@
-﻿namespace League.ConsoleApp.DTOs.Champions
+﻿namespace League.ConsoleApp.DTOs
 {
     using System.Text.Json.Serialization;
 

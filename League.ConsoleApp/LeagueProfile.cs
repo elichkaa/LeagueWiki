@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using AutoMapper;
     using Data;
     using DTOs;
@@ -120,16 +121,83 @@
                     }))
                 .ForMember(x => x.Tags,
                     opt => opt.MapFrom(x => x.Tags.Select(t => new TagsItems()
-                        {
-                            TagId = context.Tags.FirstOrDefault(p => p.Name == t).Id
-                        }))
-                    );
+                    {
+                        TagId = context.Tags.FirstOrDefault(p => p.Name == t).Id
+                    })))
+                .ForMember(x => x.RiotId,
+                    opt => opt.MapFrom(x => RegexId(x.Image.Path)))
+                .ForMember(x => x.ItemStats,
+                    opt => opt.MapFrom(x => new ItemStats
+                    {
+                        FlatMovementSpeedMod = x.ItemStats.FlatMovementSpeedMod,
+                        FlatHPPoolMod = x.ItemStats.FlatHPPoolMod,
+                        FlatCritChanceMod = x.ItemStats.FlatCritChanceMod,
+                        FlatMagicDamageMod = x.ItemStats.FlatMagicDamageMod,
+                        FlatMPPoolMod = x.ItemStats.FlatMPPoolMod,
+                        FlatArmorMod = x.ItemStats.FlatArmorMod,
+                        FlatSpellBlockMod = x.ItemStats.FlatSpellBlockMod,
+                        FlatPhysicalDamageMod = x.ItemStats.FlatPhysicalDamageMod,
+                        PercentAttackSpeedMod = x.ItemStats.PercentAttackSpeedMod,
+                        PercentLifeStealMod = x.ItemStats.PercentLifeStealMod,
+                        FlatHPRegenMod = x.ItemStats.FlatHPRegenMod,
+                        PercentMovementSpeedMod = x.ItemStats.PercentMovementSpeedMod,
+                        Stacks = x.Stacks,
+                        InStore = x.InStore,
+                        Consumable = x.Consumable,
+                        ConsumedOnFull = x.ConsumedOnFull,
+                        HideFromAll = x.HideFromAll,
+                        SpecialRecipe = x.SpecialRecipe,
+                        RequiredChampion = x.RequiredChampion
+                    }))
+                .ForMember(x => x.ItemStatsId,
+                    opt => opt.MapFrom(x => x.ItemStats.Id))
+                .ForMember(x => x.ItemsTo,
+                    opt => opt.MapFrom(x => string.Join(" ", x.ItemsTo)))
+                .ForMember(x => x.ItemsFrom,
+                    opt => opt.MapFrom(x => string.Join(" ", x.ItemsFrom)));
+            //.ForMember(x => x.ItemsFrom,
+            //    opt => opt.MapFrom(x => x.ItemsFrom.Select(i => new ItemItemsFrom
+            //    {
+            //        ItemFromId = int.Parse(i),
+            //    }).ToList()))
+            //.ForMember(x => x.ItemsTo,
+            //opt => opt.MapFrom(x => x.ItemsTo.Select(i => new ItemItemsTo()
+            //{
+            //    ItemToId = int.Parse(i),
+            //}).ToList()));
+
+            //.ForMember(x => x.ItemsTo,
+            //    opt => opt.MapFrom(x => x.ItemsTo.Select(i => new ItemTo()
+            //    {
+            //        Id = int.Parse(i),
+            //        Item = context.Items.FirstOrDefault(k => k.RiotId == int.Parse(i)),
+            //        ItemId = RegexId(x.Image.Path)
+            //    })))
+            //.ForMember(x => x.ItemsFrom,
+            //    opt => opt.MapFrom(x => x.ItemsFrom.Select(i => new ItemFrom()
+            //    {
+            //        Id = int.Parse(i),
+            //        Item = context.Items.FirstOrDefault(k => k.RiotId == int.Parse(i)),
+            //        ItemId = context.Items.FirstOrDefault(k => k.RiotId == int.Parse(i)).Id
+            //    })));
+            //ForMember(x => x.ItemsFrom,
+            //   opt => opt.MapFrom(x => x.ItemsFrom.Distinct().Select(i => new ItemItemsFrom()
+            //   {
+            //       //ItemId = RegexId(x.Image.Path),
+            //       ItemFromId = int.Parse(i)
+            //   })));~
 
             //TAGS
 
             this.CreateMap<string, Tag>()
                 .ForMember(x => x.Name,
                     opt => opt.MapFrom(x => x));
+        }
+
+        private int RegexId(string imagePath)
+        {
+            var match = Regex.Match(imagePath, "[0-9]+");
+            return int.Parse(match.Value);
         }
     }
 }

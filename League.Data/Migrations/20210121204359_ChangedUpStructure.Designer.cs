@@ -4,14 +4,16 @@ using League.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace League.Data.Migrations
 {
     [DbContext(typeof(LeagueDbContext))]
-    partial class LeagueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210121204359_ChangedUpStructure")]
+    partial class ChangedUpStructure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -223,12 +225,6 @@ namespace League.Data.Migrations
                     b.Property<int>("ItemStatsId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ItemsFrom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ItemsTo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("MapsItemId")
                         .HasColumnType("int");
 
@@ -346,6 +342,52 @@ namespace League.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MapsItem");
+                });
+
+            modelBuilder.Entity("League.Models.ItemData.Relationships.ItemItemsFrom", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("ItemFromId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RiotId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("ItemItemsFrom");
+                });
+
+            modelBuilder.Entity("League.Models.ItemData.Relationships.ItemItemsTo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int?>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemToId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RiotId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("ItemItemsTo");
                 });
 
             modelBuilder.Entity("League.Models.ItemData.TagsItems", b =>
@@ -556,6 +598,20 @@ namespace League.Data.Migrations
                     b.Navigation("Maps");
                 });
 
+            modelBuilder.Entity("League.Models.ItemData.Relationships.ItemItemsFrom", b =>
+                {
+                    b.HasOne("League.Models.ItemData.Item", null)
+                        .WithMany("ItemsFrom")
+                        .HasForeignKey("ItemId");
+                });
+
+            modelBuilder.Entity("League.Models.ItemData.Relationships.ItemItemsTo", b =>
+                {
+                    b.HasOne("League.Models.ItemData.Item", null)
+                        .WithMany("ItemsTo")
+                        .HasForeignKey("ItemId");
+                });
+
             modelBuilder.Entity("League.Models.ItemData.TagsItems", b =>
                 {
                     b.HasOne("League.Models.ItemData.Item", "Item")
@@ -625,6 +681,10 @@ namespace League.Data.Migrations
 
             modelBuilder.Entity("League.Models.ItemData.Item", b =>
                 {
+                    b.Navigation("ItemsFrom");
+
+                    b.Navigation("ItemsTo");
+
                     b.Navigation("Tags");
                 });
 

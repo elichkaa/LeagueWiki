@@ -4,14 +4,16 @@ using League.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace League.Data.Migrations
 {
     [DbContext(typeof(LeagueDbContext))]
-    partial class LeagueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210121130456_FixItemRelationship")]
+    partial class FixItemRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -223,12 +225,6 @@ namespace League.Data.Migrations
                     b.Property<int>("ItemStatsId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ItemsFrom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ItemsTo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("MapsItemId")
                         .HasColumnType("int");
 
@@ -253,6 +249,48 @@ namespace League.Data.Migrations
                     b.HasIndex("MapsItemId");
 
                     b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("League.Models.ItemData.ItemFrom", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ItemFrom");
+                });
+
+            modelBuilder.Entity("League.Models.ItemData.ItemItemsFrom", b =>
+                {
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemFromId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemId", "ItemFromId");
+
+                    b.HasIndex("ItemFromId");
+
+                    b.ToTable("ItemItemsFrom");
+                });
+
+            modelBuilder.Entity("League.Models.ItemData.ItemItemsTo", b =>
+                {
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemToId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemId", "ItemToId");
+
+                    b.HasIndex("ItemToId");
+
+                    b.ToTable("ItemItemsTo");
                 });
 
             modelBuilder.Entity("League.Models.ItemData.ItemStats", b =>
@@ -322,6 +360,18 @@ namespace League.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ItemStats");
+                });
+
+            modelBuilder.Entity("League.Models.ItemData.ItemTo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ItemTo");
                 });
 
             modelBuilder.Entity("League.Models.ItemData.MapsItem", b =>
@@ -556,6 +606,44 @@ namespace League.Data.Migrations
                     b.Navigation("Maps");
                 });
 
+            modelBuilder.Entity("League.Models.ItemData.ItemItemsFrom", b =>
+                {
+                    b.HasOne("League.Models.ItemData.ItemFrom", "ItemFrom")
+                        .WithMany()
+                        .HasForeignKey("ItemFromId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("League.Models.ItemData.Item", "Item")
+                        .WithMany("ItemsFrom")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+
+                    b.Navigation("ItemFrom");
+                });
+
+            modelBuilder.Entity("League.Models.ItemData.ItemItemsTo", b =>
+                {
+                    b.HasOne("League.Models.ItemData.Item", "Item")
+                        .WithMany("ItemsTo")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("League.Models.ItemData.ItemTo", "ItemTo")
+                        .WithMany()
+                        .HasForeignKey("ItemToId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+
+                    b.Navigation("ItemTo");
+                });
+
             modelBuilder.Entity("League.Models.ItemData.TagsItems", b =>
                 {
                     b.HasOne("League.Models.ItemData.Item", "Item")
@@ -625,6 +713,10 @@ namespace League.Data.Migrations
 
             modelBuilder.Entity("League.Models.ItemData.Item", b =>
                 {
+                    b.Navigation("ItemsFrom");
+
+                    b.Navigation("ItemsTo");
+
                     b.Navigation("Tags");
                 });
 

@@ -7,6 +7,7 @@
     using Models;
     using Models.ChampionData;
     using Models.ItemData;
+    //using Models.ItemData.Relationships;
     using Pomelo.EntityFrameworkCore.MySql;
     using Models.RuneData;
     using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
@@ -50,8 +51,8 @@
                 optionsBuilder.UseSqlServer(Configuration.SqlServerConnectionString);
 
                 //MySQL, MySQLWorkbench
-               //optionsBuilder.UseMySql(Configuration.MySQLConnectionString, new MySqlServerVersion(new Version(8, 0, 22)), x => x
-               //   .CharSetBehavior(CharSetBehavior.NeverAppend));
+                //optionsBuilder.UseMySql(Configuration.MySQLConnectionString, new MySqlServerVersion(new Version(8, 0, 22)), x => x
+                //   .CharSetBehavior(CharSetBehavior.NeverAppend));
             }
         }
 

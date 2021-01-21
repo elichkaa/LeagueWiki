@@ -1,6 +1,7 @@
 ﻿namespace League.Models.ItemData
 {
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
     public class Item
@@ -22,6 +23,17 @@
         public int MapsItemId { get; set; }
         public MapsItem Maps { get; set; }
 
+        public int ItemStatsId { get; set; }
+        public ItemStats ItemStats { get; set; }
+
+        //get from img path
+        public int RiotId { get; set; }
+
         public ICollection<TagsItems> Tags { get; set; }
+
+        public string ItemsTo { get; set; }
+        public string ItemsFrom { get; set; }
+
     }
 }
+

@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Text.Json;
     using System.Text.RegularExpressions;
+    using System.Threading;
     using AutoMapper;
     using Data;
     using DTOs;
@@ -63,6 +64,7 @@
             var items = mapper.Map<Item[]>(jsonItems);
             context.Items.AddRange(items);
             context.SaveChanges();
+            RemoveTagsFromItemDescriptions(context);
         }
 
         private static void ImportTags(ICollection<string> tags, LeagueDbContext context)

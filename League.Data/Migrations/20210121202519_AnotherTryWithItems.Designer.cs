@@ -4,20 +4,52 @@ using League.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace League.Data.Migrations
 {
     [DbContext(typeof(LeagueDbContext))]
-    partial class LeagueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210121202519_AnotherTryWithItems")]
+    partial class AnotherTryWithItems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.2");
+
+            modelBuilder.Entity("ItemItemsFrom", b =>
+                {
+                    b.Property<int>("ItemsFromId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemsFromId", "ItemsId");
+
+                    b.HasIndex("ItemsId");
+
+                    b.ToTable("ItemItemsFrom");
+                });
+
+            modelBuilder.Entity("ItemItemsTo", b =>
+                {
+                    b.Property<int>("ItemsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemsToId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemsId", "ItemsToId");
+
+                    b.HasIndex("ItemsToId");
+
+                    b.ToTable("ItemItemsTo");
+                });
 
             modelBuilder.Entity("League.Models.ChampionData.Champion", b =>
                 {
@@ -223,12 +255,6 @@ namespace League.Data.Migrations
                     b.Property<int>("ItemStatsId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ItemsFrom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ItemsTo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("MapsItemId")
                         .HasColumnType("int");
 
@@ -324,6 +350,18 @@ namespace League.Data.Migrations
                     b.ToTable("ItemStats");
                 });
 
+            modelBuilder.Entity("League.Models.ItemData.ItemsTo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ItemsTo");
+                });
+
             modelBuilder.Entity("League.Models.ItemData.MapsItem", b =>
                 {
                     b.Property<int>("Id")
@@ -346,6 +384,18 @@ namespace League.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MapsItem");
+                });
+
+            modelBuilder.Entity("League.Models.ItemData.Relationships.ItemsFrom", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ItemsFrom");
                 });
 
             modelBuilder.Entity("League.Models.ItemData.TagsItems", b =>
@@ -473,6 +523,36 @@ namespace League.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("ItemItemsFrom", b =>
+                {
+                    b.HasOne("League.Models.ItemData.Relationships.ItemsFrom", null)
+                        .WithMany()
+                        .HasForeignKey("ItemsFromId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("League.Models.ItemData.Item", null)
+                        .WithMany()
+                        .HasForeignKey("ItemsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ItemItemsTo", b =>
+                {
+                    b.HasOne("League.Models.ItemData.Item", null)
+                        .WithMany()
+                        .HasForeignKey("ItemsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("League.Models.ItemData.ItemsTo", null)
+                        .WithMany()
+                        .HasForeignKey("ItemsToId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("League.Models.ChampionData.Champion", b =>

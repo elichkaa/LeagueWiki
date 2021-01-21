@@ -4,14 +4,16 @@ using League.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace League.Data.Migrations
 {
     [DbContext(typeof(LeagueDbContext))]
-    partial class LeagueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210121102436_AddItemsStats")]
+    partial class AddItemsStats
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,23 +213,29 @@ namespace League.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<bool?>("Consumable")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("ConsumedOnFull")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("GoldId")
                         .HasColumnType("int");
 
+                    b.Property<bool?>("HideFromAll")
+                        .HasColumnType("bit");
+
                     b.Property<int>("ImageId")
                         .HasColumnType("int");
 
+                    b.Property<bool?>("InStore")
+                        .HasColumnType("bit");
+
                     b.Property<int>("ItemStatsId")
                         .HasColumnType("int");
-
-                    b.Property<string>("ItemsFrom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ItemsTo")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MapsItemId")
                         .HasColumnType("int");
@@ -239,7 +247,16 @@ namespace League.Data.Migrations
                     b.Property<string>("PlainText")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("RequiredChampion")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("RiotId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SpecialRecipe")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Stacks")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -261,12 +278,6 @@ namespace League.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
-
-                    b.Property<bool?>("Consumable")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("ConsumedOnFull")
-                        .HasColumnType("bit");
 
                     b.Property<int?>("FlatArmorMod")
                         .HasColumnType("int");
@@ -295,12 +306,6 @@ namespace League.Data.Migrations
                     b.Property<int?>("FlatSpellBlockMod")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("HideFromAll")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("InStore")
-                        .HasColumnType("bit");
-
                     b.Property<double?>("PercentAttackSpeedMod")
                         .HasColumnType("float");
 
@@ -309,15 +314,6 @@ namespace League.Data.Migrations
 
                     b.Property<double?>("PercentMovementSpeedMod")
                         .HasColumnType("float");
-
-                    b.Property<string>("RequiredChampion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("SpecialRecipe")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Stacks")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
