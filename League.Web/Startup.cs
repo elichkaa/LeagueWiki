@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 
 namespace League.Web
 {
+    using Data;
+    using Microsoft.EntityFrameworkCore;
+    using Services;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -23,6 +27,11 @@ namespace League.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<LeagueDbContext>(options =>
+            {
+                options.UseSqlServer(this.Configuration["ConnectionString"]);
+            });
+            services.AddTransient<IChampionService, ChampionService>();
             services.AddControllersWithViews();
         }
 
