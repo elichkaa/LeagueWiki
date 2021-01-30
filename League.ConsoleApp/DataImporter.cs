@@ -30,7 +30,7 @@
 
         public void ImportChampions(LeagueDbContext context)
         {
-            string path = FilePath + "champion.json";
+            string path = FilePath + "championFull.json";
             var jsonChamps = JsonSerializer.Deserialize<ChampionDto[]>(File.ReadAllText(path));
             ImportTags(jsonChamps.SelectMany(x => x.Таgs).ToList(), context);
             var champs = mapper.Map<Champion[]>(jsonChamps);

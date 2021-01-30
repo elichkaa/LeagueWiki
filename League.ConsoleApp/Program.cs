@@ -22,7 +22,7 @@
             
             var importer = new DataImporter(config);
             //CreateMySqlDb(context, importer);
-            //CreateSqlServerDb(context, importer);
+            CreateSqlServerDb(context, importer);
         }
 
         private static void CreateMySqlDb(LeagueDbContext context, DataImporter importer)
@@ -42,10 +42,10 @@
         private static void ImportData(DataImporter importer, LeagueDbContext context)
         {
             importer.ImportChampions(context);
-            importer.ImportMap(context);
-            importer.ImportRunes(context);
-            importer.ImportItems(context);
-            importer.RemoveTagsFromItemDescriptions(context);
+            //importer.ImportMap(context);
+            //importer.ImportRunes(context);
+            //importer.ImportItems(context);
+            //importer.RemoveTagsFromItemDescriptions(context);
         }
     }
 }

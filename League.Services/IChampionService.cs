@@ -7,7 +7,7 @@
     {
         IEnumerable<ChampionViewModel> GetAllChampions();
         IEnumerable<ChampionViewModel> GetChampionsByTag(string tagName);
-        IEnumerable<ChampionViewModel> GetChampionsByName(string championName);
+        ChampionViewModel GetChampionByName(string championName);
         IEnumerable<ChampionViewModel> GetChampionsByPartType(string partType);
         IEnumerable<ChampionViewModel> GetChampionsByDifficulty(int min, int max);
     }

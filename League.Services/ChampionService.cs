@@ -35,13 +35,13 @@
                 ToList();
         }
 
-        public IEnumerable<ChampionViewModel> GetChampionsByName(string championName)
+        public ChampionViewModel GetChampionByName(string championName)
         {
             return this.context
                 .Champions
                 .Where(x => x.Name.ToLower() == championName.ToLower())
-                .Select(MapToChampionViewModel()).
-                ToList();
+                .Select(MapToChampionViewModel())
+                .FirstOrDefault();
         }
 
         public IEnumerable<ChampionViewModel> GetChampionsByPartType(string partType)

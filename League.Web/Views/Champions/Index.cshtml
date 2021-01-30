@@ -11,7 +11,9 @@
                     <div class="row">
                         <div class="col-sm d-flex">
                             <div class="card card-body flex-fill">
-                                <img class="card-img-top" src="/champions/@Model.ElementAt(i).ImagePath" alt="@Model.ElementAt(i).Name">
+                                <a asp-controller="Champions" asp-action="Detailed" asp-route-championName="@Model.ElementAt(i).Name">
+                                    <img class="card-img-top" src="/champions/@Model.ElementAt(i).ImagePath" alt="@Model.ElementAt(i).Name">
+                                </a>
                                 <div class="card-body">
                                     <h5 class="card-title">@Model.ElementAt(i).Name</h5>
                                     <p class="card-text">@Model.ElementAt(i).Title</p>
@@ -20,20 +22,25 @@
                         </div>
                         <div class="col-sm d-flex">
                             <div class="card card-body flex-fill">
-                                <img class="card-img-top" src="/champions/@Model.ElementAt(i + 1).ImagePath" alt="@Model.ElementAt(i + 1).Name">
+                                <a asp-controller="Champions" asp-action="Detailed" asp-route-championName="@Model.ElementAt(i + 1).Name">
+                                    <img class="card-img-top" src="/champions/@Model.ElementAt(i + 1).ImagePath" alt="@Model.ElementAt(i + 1).Name">
+                                </a>
                                 <div class="card-body">
                                     <h5 class="card-title">@Model.ElementAt(i + 1).Name</h5>
                                     <p class="card-text">@Model.ElementAt(i + 1).Title</p>
                                 </div>
+
                             </div>
                         </div>
                         <div class="col-sm d-flex">
                             <div class="card card-body flex-fill">
-                                <img class="card-img-top" src="/champions/@Model.ElementAt(i + 2).ImagePath" alt="@Model.ElementAt(i + 2).Name">
+                                <a asp-controller="Champions" asp-action="Detailed" asp-route-championName="@Model.ElementAt(i + 2).Name">
+                                    <img class="card-img-top" src="/champions/@Model.ElementAt(i + 2).ImagePath" alt="@Model.ElementAt(i + 2).Name">
+                                </a>
                                 <div class="card-body">
-                                    <h5 class="card-title">@Model.ElementAt(i + 2).Name</h5>
-                                    <p class="card-text">@Model.ElementAt(i + 2).Title</p>
-                                </div>
+                                        <h5 class="card-title">@Model.ElementAt(i + 2).Name</h5>
+                                        <p class="card-text">@Model.ElementAt(i + 2).Title</p>
+                                    </div>
                             </div>
                         </div>
                     </div>

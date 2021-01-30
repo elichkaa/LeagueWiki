@@ -17,5 +17,11 @@
             var champions = this.championsService.GetAllChampions();
             return this.View(champions);
         }
+
+        public IActionResult Detailed(string championName)
+        {
+            var champion = this.championsService.GetChampionByName(championName);
+            return this.View(champion);
+        }
     }
 }
