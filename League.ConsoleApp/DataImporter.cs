@@ -1,18 +1,17 @@
 ﻿namespace League.ConsoleApp
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Text.Json;
     using System.Text.RegularExpressions;
-    using System.Threading;
     using AutoMapper;
     using Data;
     using DTOs;
     using DTOs.Champions;
     using DTOs.Items;
     using DTOs.Runes;
+    using Microsoft.EntityFrameworkCore;
     using Models;
     using Models.ChampionData;
     using Models.ItemData;

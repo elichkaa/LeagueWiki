@@ -41,10 +41,10 @@
 
         private static void ImportData(DataImporter importer, LeagueDbContext context)
         {
+            importer.ImportItems(context);
             importer.ImportChampions(context);
             //importer.ImportMap(context);
             //importer.ImportRunes(context);
-            //importer.ImportItems(context);
             //importer.RemoveTagsFromItemDescriptions(context);
         }
     }

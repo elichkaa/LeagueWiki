@@ -30,21 +30,24 @@
         public string PartType { get; set; }
 
         [JsonPropertyName("skins")]
-        public SkinDto[] Skins { get; set; }
+        public ICollection<SkinDto> Skins { get; set; }
 
         [JsonPropertyName("lore")]
         public string Lore { get; set; }
 
         [JsonPropertyName("allytips")]
-        public string[] AllyTips { get; set; }
+        public ICollection<string> AllyTips { get; set; }
 
         [JsonPropertyName("enemytips")]
-        public string[] EnemyTips { get; set; }
+        public ICollection<string> EnemyTips { get; set; }
 
         [JsonPropertyName("spells")]
         public SpellDto[] Spells { get; set; }
 
         [JsonPropertyName("passive")]
         public PassiveDto Passive { get; set; }
+
+        [JsonPropertyName("recommended")]
+        public RecommendedDto[] Recommended { get; set; }
     }
 }

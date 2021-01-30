@@ -4,14 +4,16 @@ using League.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace League.Data.Migrations
 {
     [DbContext(typeof(LeagueDbContext))]
-    partial class LeagueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210130155128_AddAllyAndEnemyTips")]
+    partial class AddAllyAndEnemyTips
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,38 +41,6 @@ namespace League.Data.Migrations
                     b.ToTable("AllyTip");
                 });
 
-            modelBuilder.Entity("League.Models.ChampionData.Block", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("HideIfSummonerSpell")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MaxSummonerLevel")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MinSummonerLevel")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RecommendedId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ShowIfSummonerSpell")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecommendedId");
-
-                    b.ToTable("Block");
-                });
-
             modelBuilder.Entity("League.Models.ChampionData.Champion", b =>
                 {
                     b.Property<int>("Id")
@@ -87,18 +57,12 @@ namespace League.Data.Migrations
                     b.Property<int>("InfoId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Lore")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("PartType")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PassiveId")
-                        .HasColumnType("int");
 
                     b.Property<int>("StatsId")
                         .HasColumnType("int");
@@ -112,8 +76,6 @@ namespace League.Data.Migrations
                     b.HasIndex("ImageId");
 
                     b.HasIndex("InfoId");
-
-                    b.HasIndex("PassiveId");
 
                     b.HasIndex("StatsId");
 
@@ -162,55 +124,6 @@ namespace League.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ChampionInfo");
-                });
-
-            modelBuilder.Entity("League.Models.ChampionData.Passive", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ImageId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ImageId");
-
-                    b.ToTable("Passive");
-                });
-
-            modelBuilder.Entity("League.Models.ChampionData.Recommended", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("ChampionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MapName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChampionId");
-
-                    b.ToTable("Recommended");
                 });
 
             modelBuilder.Entity("League.Models.ChampionData.Skin", b =>
@@ -368,9 +281,6 @@ namespace League.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("BlockId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -403,8 +313,6 @@ namespace League.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BlockId");
 
                     b.HasIndex("GoldId");
 
@@ -648,13 +556,6 @@ namespace League.Data.Migrations
                     b.Navigation("Champion");
                 });
 
-            modelBuilder.Entity("League.Models.ChampionData.Block", b =>
-                {
-                    b.HasOne("League.Models.ChampionData.Recommended", null)
-                        .WithMany("Blocks")
-                        .HasForeignKey("RecommendedId");
-                });
-
             modelBuilder.Entity("League.Models.ChampionData.Champion", b =>
                 {
                     b.HasOne("League.Models.Image", "Image")
@@ -669,12 +570,6 @@ namespace League.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("League.Models.ChampionData.Passive", "Passive")
-                        .WithMany()
-                        .HasForeignKey("PassiveId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("League.Models.ChampionData.Stats", "Stats")
                         .WithMany()
                         .HasForeignKey("StatsId")
@@ -685,8 +580,6 @@ namespace League.Data.Migrations
 
                     b.Navigation("Info");
 
-                    b.Navigation("Passive");
-
                     b.Navigation("Stats");
                 });
 
@@ -694,28 +587,6 @@ namespace League.Data.Migrations
                 {
                     b.HasOne("League.Models.ChampionData.Champion", "Champion")
                         .WithMany("EnemyTips")
-                        .HasForeignKey("ChampionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Champion");
-                });
-
-            modelBuilder.Entity("League.Models.ChampionData.Passive", b =>
-                {
-                    b.HasOne("League.Models.Image", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Image");
-                });
-
-            modelBuilder.Entity("League.Models.ChampionData.Recommended", b =>
-                {
-                    b.HasOne("League.Models.ChampionData.Champion", "Champion")
-                        .WithMany("Recommendations")
                         .HasForeignKey("ChampionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -762,10 +633,6 @@ namespace League.Data.Migrations
 
             modelBuilder.Entity("League.Models.ItemData.Item", b =>
                 {
-                    b.HasOne("League.Models.ChampionData.Block", null)
-                        .WithMany("Items")
-                        .HasForeignKey("BlockId");
-
                     b.HasOne("League.Models.ItemData.Gold", "Gold")
                         .WithMany()
                         .HasForeignKey("GoldId")
@@ -861,27 +728,15 @@ namespace League.Data.Migrations
                     b.Navigation("Slots");
                 });
 
-            modelBuilder.Entity("League.Models.ChampionData.Block", b =>
-                {
-                    b.Navigation("Items");
-                });
-
             modelBuilder.Entity("League.Models.ChampionData.Champion", b =>
                 {
                     b.Navigation("AllyTips");
 
                     b.Navigation("EnemyTips");
 
-                    b.Navigation("Recommendations");
-
                     b.Navigation("Skins");
 
                     b.Navigation("Tags");
-                });
-
-            modelBuilder.Entity("League.Models.ChampionData.Recommended", b =>
-                {
-                    b.Navigation("Blocks");
                 });
 
             modelBuilder.Entity("League.Models.ChampionData.Skin", b =>

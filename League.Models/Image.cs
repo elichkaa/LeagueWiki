@@ -1,5 +1,4 @@
-﻿
-namespace League.Models
+﻿namespace League.Models
 {
     using System.ComponentModel.DataAnnotations;
 

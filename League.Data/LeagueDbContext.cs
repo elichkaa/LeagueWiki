@@ -1,7 +1,6 @@
 ﻿namespace League.Data
 {
     using System;
-    using EntityConfiguration;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Models;
@@ -18,11 +17,11 @@
     {
         public LeagueDbContext()
         {
-            
+
         }
 
         public LeagueDbContext(DbContextOptions options)
-            :base(options)
+            : base(options)
         {
 
         }
@@ -42,6 +41,7 @@
         public DbSet<Rune> Rune { get; set; }
         public DbSet<Slot> Slots { get; set; }
         public DbSet<Map> Map { get; set; }
+        public DbSet<Skin> Skins { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -59,8 +59,8 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //configurations
-            modelBuilder.ApplyConfiguration(new TagsChampionsConfiguration());
-            modelBuilder.ApplyConfiguration(new TagsItemsConfiguration());
+            modelBuilder.Entity<TagsChampions>().HasKey(x => new { x.ChampionId, x.TagId });
+            modelBuilder.Entity<TagsItems>().HasKey(x => new { x.ItemId, x.TagId });
         }
     }
 }

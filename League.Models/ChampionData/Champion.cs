@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Champion
     {
@@ -22,10 +23,17 @@
         public Image Image { get; set; }
 
         public ICollection<TagsChampions> Tags { get; set; }
+        public ICollection<Skin> Skins { get; set; }
+        public ICollection<AllyTip> AllyTips { get; set; }
+        public ICollection<EnemyTip> EnemyTips { get; set; }
+        public ICollection<Recommended> Recommendations { get; set; }
 
         public string PartType { get; set; }
 
         public int StatsId { get; set; }
         public Stats Stats { get; set; }
+        
+        public int PassiveId { get; set; }
+        public Passive Passive { get; set; }
     }
 }

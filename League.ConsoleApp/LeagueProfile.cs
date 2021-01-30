@@ -9,6 +9,7 @@
     using DTOs.Champions;
     using DTOs.Items;
     using DTOs.Runes;
+    using Microsoft.EntityFrameworkCore;
     using Models;
     using Models.ChampionData;
     using Models.ItemData;
@@ -61,8 +62,67 @@
                     opt => opt.MapFrom(x => x.Таgs.Select(t => new TagsChampions()
                     {
                         TagId = context.Tags.FirstOrDefault(p => p.Name == t).Id
+                    })))
+                .ForMember(x => x.Skins,
+                    opt => opt.MapFrom(x => x.Skins.Select(s => new Skin
+                    {
+                        Name = s.Name,
+                        HasChromas = s.HasChromas,
+                        Images = new List<Image>()
+                        {
+                            new Image
+                            {
+                                Path = $@"\skins\splash\{x.Name}_{s.Num}.jpg"
+                            },
+                            new Image
+                            {
+                                Path = $@"\skins\loading\{x.Name}_{s.Num}.jpg"
+                            },
+                            new Image()
+                            {
+                                Path = $@"\skins\tiles\{x.Name}_{s.Num}.jpg"
+                            }
+                        }
+                    })))
+                .ForMember(x => x.AllyTips,
+                    opt => opt.MapFrom(x => x.AllyTips.Select(a => new AllyTip()
+                    {
+                        TipText = a,
+                    })))
+                .ForMember(x => x.EnemyTips,
+                    opt => opt.MapFrom(x => x.EnemyTips.Select(a => new EnemyTip()
+                    {
+                        TipText = a,
+                    })))
+                .ForMember(x => x.Passive,
+                    opt => opt.MapFrom(x => new Passive
+                    {
+                        Name = x.Passive.Name,
+                        Description = x.Passive.Description,
+                        Image = new Image
+                        {
+                            Path = x.Passive.Image.Path
+                        }
                     }))
-                );
+                .ForMember(x => x.Recommendations,
+                    opt => opt.MapFrom(x => x.Recommended.Select(r => new Recommended
+                    {
+                        Title = r.Title,
+                        MapName = r.MapName,
+                        Mode = r.Mode,
+                        Blocks = r.Blocks.Select(b => new Block
+                        {
+                            Type = b.Type,
+                            MinSummonerLevel = b.MinSummonerLevel,
+                            MaxSummonerLevel = b.MaxSummonerLevel,
+                            ShowIfSummonerSpell = b.ShowIfSummonerSpell,
+                            HideIfSummonerSpell = b.HideIfSummonerSpell,
+                            Items = 
+                            //Items = context.Items.Where(i => b.Items.Select(k => k.ItemId).Contains(i.RiotId.ToString())).AsNoTracking().ToList()
+                        }).ToList()
+                    })));
+
+            //MAPS
 
             this.CreateMap<MapDto, Map>()
                 .ForMember(x => x.Image,
@@ -155,6 +215,8 @@
                     opt => opt.MapFrom(x => string.Join(" ", x.ItemsTo)))
                 .ForMember(x => x.ItemsFrom,
                     opt => opt.MapFrom(x => string.Join(" ", x.ItemsFrom)));
+
+
             //.ForMember(x => x.ItemsFrom,
             //    opt => opt.MapFrom(x => x.ItemsFrom.Select(i => new ItemItemsFrom
             //    {
