@@ -61,6 +61,7 @@
             //configurations
             modelBuilder.Entity<TagsChampions>().HasKey(x => new { x.ChampionId, x.TagId });
             modelBuilder.Entity<TagsItems>().HasKey(x => new { x.ItemId, x.TagId });
+            modelBuilder.Entity<BlockItem>().HasKey(x => new { x.ItemId, x.BlockId });
         }
     }
 }

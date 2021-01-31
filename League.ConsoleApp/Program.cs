@@ -8,7 +8,11 @@
     {
         static void Main()
         {
-            using var context = new LeagueDbContext();
+            var options = new DbContextOptionsBuilder()
+            {
+            };
+            options.EnableSensitiveDataLogging();
+            using var context = new LeagueDbContext(options.Options);
             //https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/Doublelift?api_key=RGAPI-e6c19fab-9840-4a8d-8b21-dbb9e6e4bec3
 
             //uncomment the method you would like to use

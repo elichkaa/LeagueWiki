@@ -20,7 +20,7 @@
         [JsonPropertyName("hideIfSummonerSpell")]
         public string HideIfSummonerSpell { get; set; }
 
-        [JsonPropertyName("items")]
-        public ICollection<BlockItemDto> Items { get; set; } 
+        [JsonPropertyName("items")] 
+        public ICollection<BlockItemDto> Items { get; set; }
     }
 }

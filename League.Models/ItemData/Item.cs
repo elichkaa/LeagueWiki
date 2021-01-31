@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using ChampionData;
 
     public class Item
     {
@@ -30,6 +31,7 @@
         public int RiotId { get; set; }
 
         public ICollection<TagsItems> Tags { get; set; }
+        public ICollection<BlockItem> BlockItems { get; set; }
 
         public string ItemsTo { get; set; }
         public string ItemsFrom { get; set; }

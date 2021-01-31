@@ -14,6 +14,7 @@
     using Models.ChampionData;
     using Models.ItemData;
     using Models.RuneData;
+    using Pomelo.EntityFrameworkCore.MySql.Internal;
 
     public class LeagueProfile : Profile
     {
@@ -117,10 +118,25 @@
                             MaxSummonerLevel = b.MaxSummonerLevel,
                             ShowIfSummonerSpell = b.ShowIfSummonerSpell,
                             HideIfSummonerSpell = b.HideIfSummonerSpell,
-                            Items = 
+                           //Items = b.Items.Select(i => i.ItemId).Select(it => new BlockItem()
+                           //{
+                           //    ItemId = context.Items.FirstOrDefault(k => k.RiotId.ToString() == it).Id
+                           //}).ToList()
+
+                            //ItemId = int.Parse(k.ItemId),
+                            //Item = context.Items.Where(i => i.RiotId == int.Parse(k.ItemId)),
+                            //// ItemId = context.Items.FirstOrDefault(i => i.RiotId == int.Parse(k.ItemId)).Id
+
+                            //context.Items.Where(it => b.Items.Select(p => p.ItemId).Contains(it.RiotId.ToString())).ToList()
+                            //FirstOrDefault(it => b.Items.FirstOrDefault(bi => bi.ItemId == it.RiotId.ToString())).Id
                             //Items = context.Items.Where(i => b.Items.Select(k => k.ItemId).Contains(i.RiotId.ToString())).AsNoTracking().ToList()
                         }).ToList()
                     })));
+
+            this.CreateMap<BlockItemDto, BlockItemDto>()
+                .ForMember(x => x.ItemId,
+                    opt => opt.MapFrom(x => x.ItemId));
+
 
             //MAPS
 

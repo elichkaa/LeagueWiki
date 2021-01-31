@@ -16,6 +16,6 @@
         
         public string HideIfSummonerSpell { get; set; }
         
-        public ICollection<Item> Items { get; set; }
+        public ICollection<BlockItem> Items { get; set; }
     }
 }

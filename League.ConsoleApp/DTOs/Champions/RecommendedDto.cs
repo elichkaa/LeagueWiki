@@ -19,7 +19,7 @@ namespace League.ConsoleApp.DTOs.Champions
         [JsonPropertyName("mode")]
         public string Mode { get; set; }
 
-        [JsonPropertyName("blocks")]
-        public ICollection<BlockDto> Blocks { get; set; }
+        [JsonPropertyName("blocks")] 
+        public ICollection<BlockDto> Blocks { get; set; } = new List<BlockDto>();
     }
 }
